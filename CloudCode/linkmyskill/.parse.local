@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "_default": {
+      "link": "linkmyskill"
+    },
+    "linkmyskill": {
+      "applicationId": "18bpg6IY6fut7G1BMNorCNNUoC623NASnpkg22kL"
+    }
+  }
+}
