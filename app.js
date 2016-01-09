@@ -13,7 +13,7 @@ if (cluster.isMaster) {
     var compression = require('compression');
     var app = express();
     var passport = require('passport'),
-    LinkedInStrategyStrategy = require('passport-linkedin').Strategy;
+    LinkedInStrategy = require('passport-linkedin').Strategy;
     passport.use(new LinkedInStrategy({
         consumerKey: "75f6p3bahfcoom",
         consumerSecret: "zWwdVg3oiLoP5Le7",
@@ -33,7 +33,7 @@ if (cluster.isMaster) {
         passport.authenticate('linkedin', { failureRedirect: '/auth/linkedin' },
         function(req, res) {
             res.jsonp(req.user);
-        });
+        }));
     //var path = require('path');
     //app.use(express.static(path.join(__dirname, 'public')));
     app.use(compression({filter: shouldCompress}))
