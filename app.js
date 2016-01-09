@@ -16,8 +16,8 @@ if (cluster.isMaster) {
     passport.use(new LinkedInStrategy({
         consumerKey: "75f6p3bahfcoom",
         consumerSecret: "zWwdVg3oiLoP5Le7",
-        callbackURL: "http://linkmyskill.herokuapp.com/auth/linkedin/callback",
-        profileFields: ['id', 'first-name', 'last-name', 'email-address', 'headline']
+        callbackURL: "http://localhost:3000/auth/linkedin/callback"
+        //profileFields: ['id', 'first-name', 'last-name', 'email-address', 'headline']
       },
       function(token, tokenSecret, profile, done) {
         done(null, {
@@ -30,10 +30,17 @@ if (cluster.isMaster) {
     var session = require('express-session');
     app.use(session({
       secret: 'keyboard cat',
-      resave: false,
-      saveUninitialized: true,
-      cookie: { secure: true }
+      resave: false
+      ,saveUninitialized: true
+      //,cookie: { secure: true }
     }));
+    passport.serializeUser(function(user, done) {
+        done(null, user);
+    });
+
+    passport.deserializeUser(function(user, done) {
+      done(null, user);
+    });
     app.use(passport.initialize());
     app.use(passport.session());
     app.get('/auth/linkedin', passport.authenticate('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] }));
