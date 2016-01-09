@@ -10,7 +10,7 @@ if (cluster.isMaster) {
     });
 } else {
     var express = require('express');
-    var compression = require('compression')
+    var compression = require('compression');
     var app = express();
     //var path = require('path');
     //app.use(express.static(path.join(__dirname, 'public')));
