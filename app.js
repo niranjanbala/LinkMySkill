@@ -12,6 +12,28 @@ if (cluster.isMaster) {
     var express = require('express');
     var compression = require('compression');
     var app = express();
+    var passport = require('passport'),
+    LinkedInStrategyStrategy = require('passport-linkedin').Strategy;
+    passport.use(new LinkedInStrategy({
+        consumerKey: "75f6p3bahfcoom",
+        consumerSecret: "zWwdVg3oiLoP5Le7",
+        callbackURL: "http://linkmyskill.herokuapp.com/auth/linkedin/callback",
+        profileFields: ['id', 'first-name', 'last-name', 'email-address', 'headline']
+      },
+      function(token, tokenSecret, profile, done) {
+        done(null, {
+            token: token,
+            tokenSecret: tokenSecret,
+            profile: profile
+        });
+      }
+    ));
+    app.get('/auth/linkedin', passport.authenticate('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] }));
+    app.get('/auth/linkedin/callback', 
+        passport.authenticate('linkedin', { failureRedirect: '/auth/linkedin' },
+        function(req, res) {
+            res.jsonp(req.user);
+        });
     //var path = require('path');
     //app.use(express.static(path.join(__dirname, 'public')));
     app.use(compression({filter: shouldCompress}))
