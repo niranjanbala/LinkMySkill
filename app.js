@@ -38,7 +38,7 @@ if (cluster.isMaster) {
     app.get('/auth/linkedin/callback', 
         passport.authenticate('linkedin', { failureRedirect: '/auth/linkedin' },
         function(req, res) {
-            res.jsonp(req.user);
+            res.json(req.user);
         }));
     //var path = require('path');
     //app.use(express.static(path.join(__dirname, 'public')));
