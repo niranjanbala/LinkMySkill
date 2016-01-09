@@ -5,7 +5,6 @@ if (cluster.isMaster) {
         cluster.fork();
     }
     cluster.on('exit', function (worker) {
-        console.log('Worker ' + worker.id + ' died :(');
         cluster.fork();
     });
 } else {
@@ -51,6 +50,5 @@ if (cluster.isMaster) {
         return compression.filter(req, res)
     }
     app.set('port', process.env.PORT || 3000);
-    app.listen(app.get('port'));
-    console.log('Worker ' + cluster.worker.id + ' running!');
+    app.listen(app.get('port'));    
 }
