@@ -33,7 +33,9 @@ if (cluster.isMaster) {
       resave: false,
       saveUninitialized: true,
       cookie: { secure: true }
-    }))
+    }));
+    app.use(passport.initialize());
+    app.use(passport.session());
     app.get('/auth/linkedin', passport.authenticate('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] }));
     app.get('/auth/linkedin/callback', 
         passport.authenticate('linkedin', { failureRedirect: '/auth/linkedin' }),
